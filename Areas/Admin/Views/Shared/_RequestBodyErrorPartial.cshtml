@@ -1,0 +1,8 @@
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+
+@if (ViewBag.ErrorMessage is not null &&  ViewBag.ErrorMessage is not "")
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}

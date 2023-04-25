@@ -1,0 +1,10 @@
+@model X.PagedList.IPagedList<CSE_website.Models.Lecturer>
+@using X.PagedList.Mvc.Core;
+
+@Html.PagedListPager(Model, page => Url.Action($"{ViewBag.UrlAction}", new { page }), 
+    new PagedListRenderOptions 
+    { 
+        LiElementClasses = new List<string> { "page-item" },
+        UlElementClasses = new List<string> { "pagination" },
+        PageClasses = new List<string> { "page-link" },
+    })

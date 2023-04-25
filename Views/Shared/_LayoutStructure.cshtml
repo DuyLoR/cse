@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CSE_website</title>
+    <link rel="stylesheet" href="~/lib/fontawesome/fontawesome5/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="~/lib/OwlCarousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/lib/OwlCarousel/dist/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/general_theme/css/alter.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/user_theme/css/template.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/user_theme/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/user_theme/css/responsive.css" asp-append-version="true">
+    @*
+    <link rel="stylesheet" href="~/CSE_website.styles.css" asp-append-version="true" /> *@
+</head>
+
+<body class="page-home">
+    @* Header *@
+    @Html.Partial("_Header")
+
+    @* <!-- Search --> *@
+    @Html.Partial(Url.Content("~/Views/Shared/Block/_HeaderSearch.cshtml"))
+    @* Main *@
+    <div class="main-wrapper">
+        <div class="main">
+            <div class="main-content">
+                <div class="main-content-container container-fluid pt-md-5 px-md40">
+                    <div class="main-content-container-inner">
+                        <div class="row">
+                            <div class="col-md-8">
+                                @RenderBody()
+                            </div>
+                            <div class="col-md-4">
+                                @* Sidebar *@
+                                @Html.Partial("_Sidebar1")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Footer *@
+    @Html.Partial("_Footer")
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="~/lib/OwlCarousel/dist/owl.carousel.min.js"></script>
+    <script src="~/user_theme/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

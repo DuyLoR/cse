@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CSE_website</title>
+    <link rel="stylesheet" href="~/lib/fontawesome/fontawesome5/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="~/lib/OwlCarousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/lib/OwlCarousel/dist/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/general_theme/css/alter.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/user_theme/css/template.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/user_theme/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/user_theme/css/responsive.css" asp-append-version="true">
+    @* <link rel="stylesheet" href="~/CSE_website.styles.css" asp-append-version="true" /> *@
+</head>
+
+<body class="page-home">
+    @* Header *@
+    @Html.Partial("_Header")
+
+    <!-- Search -->
+    @Html.Partial(Url.Content("~/Views/Shared/Block/_HeaderSearch.cshtml"))
+
+    <div class="main-wrapper">
+        @RenderBody()
+    </div>
+    @* Footer *@
+    @Html.Partial("_Footer")
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="~/lib/OwlCarousel/dist/owl.carousel.min.js"></script>
+    <script src="~/user_theme/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function renderCategory(item, index) {
+            var childListHtml = '';
+            $.each(item.ChildCategoriesList, function (index, childCate) {
+                var childListLevel = '';
+
+                if (childCate.ChildCategoriesList.length !== 0) {
+                    childListLevel = renderCategory(childCate);
+                }
+                childListHtml += `                    
+                    <li> 
+                        <a class="dropdown-item" href="${childCate?.Link}">${childCate?.Name}</a> 
+                        ${childListLevel}
+                    </li> `;
+            });
+
+            return `
+            <ul class="dropdown-menu" aria-labelledby="nD${index + 1}"> 
+                ${childListHtml}
+            </ul> 
+        `;
+        }
+
+        $.ajax({
+            url: "/Admin/Category/GetParentWithChildCategoriesByJson",
+            method: "POST",
+            success: function (rawJson) {
+                console.log(rawJson);
+                if (rawJson != null) {
+                    // Parse data from raw
+                    const data = JSON.parse(rawJson);
+                    const catesList = data.categories;
+                    var html = '';
+
+                    $.each(catesList, function (index, cate) {
+                        html += `
+                    <li class="nav-item dropdown"> 
+                        <a class="nav-link dropdown-toggle" href="${cate?.Link}" id="nD${index + 1}" role="button" 
+                            aria-expanded="false" aria-current="page">
+                            ${cate?.Name}
+                        </a>
+                        ${renderCategory(cate, index)}
+                    </li> 
+                    `;
+                    });
+                    $('#category-list').html(html);
+                }
+            },
+            error: function (errorThrown) {
+                if (errorThrown.responseText) {
+                    alert("Có lỗi đã xảy ra vui lòng kiểm tra lại thông tin!");
+                }
+            },
+            complete: function (jqXHR) {
+                if (jqXHR.status != 200) { } else { }
+            }
+        });
+    </script>
+</body>
+
+</html>

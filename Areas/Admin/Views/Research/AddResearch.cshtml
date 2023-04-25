@@ -1,0 +1,37 @@
+@{
+    ViewData["Title"] = "Thêm thông tin";
+}
+
+<div class="site-content">
+    <div class="site-content-title">
+        <h3>Thêm thông tin</h3>
+    </div>
+
+    <div class="site-content-main">
+       
+        <div class="mb-3 row site-content-item">
+            <label for="inputTitle" class="col-sm-2 col-form-label">Tên lĩnh vực:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputTitle" placeholder="Tên lĩnh vực">
+            </div>
+        </div>
+    </div>
+    <div class="site-content-footer">
+        <div class="button-admin">
+            <a class="button-admin-link" href="#">Lưu lại</a>
+        </div>
+        <div class="button-admin">
+            <a asp-controller="Research" asp-action="Index" class="button-admin-link">Quay lại</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    ClassicEditor.create(document.querySelector("#editorDesc"))
+        .then((editor) => {
+            console.log(editor);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+</script>

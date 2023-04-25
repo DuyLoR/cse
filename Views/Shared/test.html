@@ -1,0 +1,110 @@
+﻿<div class="main-wrapper">
+    <div class="main">
+        <div class="main-content">
+            <div class="main-content-container">
+                <div class="main-content-container-inner">
+
+                    <div class="sidebar">
+                        <div class="sidebar-container container">
+                            <div class="sidebar-container-inner row">
+                                <div class="sidebar-container-content col-8">
+                                    @RenderBody()
+                                </div>
+
+                                <div class="sidebar-container-right col-4">
+                                    <div class="sidebar-recent-post">
+                                        <div class="sidebar-recent-post-title mb-2">
+                                            <h4>Danh mục</h4>
+                                        </div>
+
+                                        <div class="sidebar-recent-post-content">
+                                            <ul>
+                                                <li class="sidebar-content-item">
+                                                    <a asp-controller="Post" asp-action="News">
+                                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                                        Tin tức
+                                                    </a>
+                                                </li>
+                                                <li class="sidebar-content-item">
+                                                    <a asp-controller="Post" asp-action="Notification">
+                                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                                        Thông báo
+                                                    </a>
+                                                </li>
+                                                <li class="sidebar-content-item">
+                                                    <a asp-controller="Post" asp-action="Activity">
+                                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                                        Hoạt động sinh viên
+                                                    </a>
+                                                </li>
+                                                <li class="sidebar-content-item">
+                                                    <a asp-controller="EduProgram" asp-action="Index">
+                                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                                        Đào tạo
+                                                    </a>
+                                                </li>
+                                                <li class="sidebar-content-item">
+                                                    <a asp-controller="Admissions" asp-action="Index">
+                                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                                        Tuyển sinh
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-recent-post">
+                                        <div class="sidebar-recent-post-title">
+                                            <h4>Tags</h4>
+                                        </div>
+                                        <div class="sidebar-recent-post-wrapper">
+                                            <a class="sidebar-recent-post-item" href="#">learning (3)</a>
+                                            <a class="sidebar-recent-post-item" href="#">học máy (3)</a>
+                                            <a class="sidebar-recent-post-item" href="#">trí tuệ nhân tạo
+                                                (3)</a>
+                                            <a class="sidebar-recent-post-item" href="#">lập trình (3)</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="sidebar-faculty-container">
+                                        <div class="sidebar-faculty-inner">
+                                            <h3>Khoa Công nghệ thông tin</h3>
+                                            <span>Nhà C1, Trường đại học Thủy Lợi</span>
+                                            <span>175 Tây Sơn, Đống Đa, Hà Nội</span>
+                                            <span>+(84)-024 3 5632211</span>
+                                            <span>Email: vpkcntt@tlu.edu.vn</span>
+                                            <span>Thứ Hai - Thứ Sáu 8.00 A.M - 5.00 P.M</span>
+                                            <h4>Mạng xã hội</h4>
+                                            <div class="sidebar-faculty-social">
+                                                <a href="#">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fab fa-google"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fab fa-skype"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fab fa-twitter"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fab fa-instagram"></i>
+                                                </a>
+                                            </div>
+                                            <div class="sidebar-faculty-btn">
+                                                <a href="#">Liên hệ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,176 @@
+@{
+    ViewData["Title"] = "Công bố khoa học";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    // Gán một mảng vào ViewData
+    ViewData["Breadcrumbs"] = new string[] { "ScienceAndTechnology", "ScienceAndTechnology" };
+    ViewData["BreadcrumbsText"] = new string[] { "Khoa học công nghệ", "Công bố khoa học" };
+    ViewData["currentAction"] = new string[] { "Index", "ScientificPublicationDetail" };
+}
+
+<div class="sidebar-content-inner">
+    <div class="sidebar-content-header">
+        <div class="sidebar-content-title">
+            <div class="sidebar-title-left">
+                <div class="sidebar-title-left-day">06</div>
+                <div class="sidebar-title-left-month">Jun</div>
+            </div>
+            <div class="sidebar-title-right">
+                <h5 class="sidebar-title-right-title">
+                    Các công trình công bố
+                    năm 2014
+                </h5>
+                <div class="sidebar-title-right-wrapper">
+                    <div class="sidebar-title-right-author">
+                        <div>By</div>
+                        <div style="margin-left: 10px;">Tin tức</div>
+                    </div>
+                    <div class="sidebar-title-right-category"></div>
+                    <div class="sidebar-title-right-ncomment">1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="breadcrumbs breadcrumbs-bold">
+        <div class="breadcrumbs-bold-container">
+            @* _Breadcrumbs *@
+            @Html.Partial(Url.Content("~/Views/Shared/Block/_Breadcrumbs.cshtml"))
+        </div>
+    </div>
+    <div class="structure-container">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        <span class="table-header-title">STT</span>
+                    </th>
+                    <th>
+                        <span class="table-header-title">
+                            Tên bài công
+                            trình
+                        </span>
+                    </th>
+                    <th>
+                        <span class="table-header-title">Tác giả</span>
+                    </th>
+                    <th>
+                        <span class="table-header-title">
+                            Tạp chí, kỷ
+                            yếu
+                        </span>
+                    </th>
+                    <th>
+                        <span class="table-header-title">Số</span>
+                    </th>
+                    <th>
+                        <span class="table-header-title">Năm</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">
+                        <span class="table-header" style="font-family: Arial, Helvetica, sans-serif;font-size: 12pt;">
+                            1
+                        </span>
+                    </th>
+                    <td>
+                        <span class="table-header">
+                            Forecasting water levels
+                            at Thakhek station for
+                            5-lead-day in Mekong river using random
+                            forests
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header">
+                            Nguyen Thanh Tung,
+                            Nguyen Khac Tien Phuoc
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header-intalic">
+                            The Annual
+                            conference of
+                            Thuyloi University
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header">2/0</span>
+                    </td>
+                    <td>
+                        <span class="table-header">2014</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <span class="table-header" style="font-family: Arial, Helvetica, sans-serif;font-size: 12pt;">
+                            2
+                        </span>
+                    </th>
+                    <td>
+                        <span class="table-header">
+                            Forecasting water levels
+                            at Thakhek station for
+                            5-lead-day in Mekong river using random
+                            forests
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header">
+                            Nguyen Thanh Tung,
+                            Nguyen Khac Tien Phuoc
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header-intalic">
+                            The Annual
+                            conference of
+                            Thuyloi University
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header">2/0</span>
+                    </td>
+                    <td>
+                        <span class="table-header">2014</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <span class="table-header" style="font-family: Arial, Helvetica, sans-serif;font-size: 12pt;">
+                            3
+                        </span>
+                    </th>
+                    <td>
+                        <span class="table-header">
+                            Forecasting water levels
+                            at Thakhek station for
+                            5-lead-day in Mekong river using random
+                            forests
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header">
+                            Nguyen Thanh Tung,
+                            Nguyen Khac Tien Phuoc
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header-intalic">
+                            The Annual
+                            conference of
+                            Thuyloi University
+                        </span>
+                    </td>
+                    <td>
+                        <span class="table-header">2/0</span>
+                    </td>
+                    <td>
+                        <span class="table-header">2014</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

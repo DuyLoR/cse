@@ -1,0 +1,92 @@
+@using CSE_website.Models
+@model Department
+@{
+    ViewData["Title"] = "Cập nhật thông tin";
+}
+
+<div class="site-content">
+    <div class="site-content-title">
+        <h3>Cập nhật thông tin</h3>
+    </div>
+
+    <form method="post" asp-controller="Department" asp-action="EditDepartment" >
+        <div class="site-content-main">
+            <div class="mb-3 row site-content-item">
+                <label for="inputName" class="col-sm-2 col-form-label">Tên bộ môn:<span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Name" class="form-control" id="inputName" placeholder="Tên bộ môn">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputDecription" class="col-sm-2 col-form-label">Mô tả: </label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Decription" class="form-control" placeholder="Mô tả">
+                </div>
+            </div>
+             <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Giảng viên:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedLecturerId,
+                        new SelectList(
+                            ((List<Lecturer>)ViewBag.Lecturers)
+                                .Select(lecturer => new SelectListItem
+                                {
+                                    Value = lecturer.Id.ToString(),
+                                    Text = lecturer.Name
+                                }), "Value", "Text"),
+                        "Chọn giảng viên",
+                        new { @class = "form-control lecturer-selections" })
+                    <span asp-validation-for="SelectedLecturerId" class="text-danger"></span>
+                </div>
+            </div>
+             <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Khoa:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedFacultyOfficeId,
+                        new SelectList(
+                            ((List<FacultyOffice>)ViewBag.FacultyOffices)
+                                .Select(facultyOffice => new SelectListItem
+                                {
+                                    Value = facultyOffice.Id.ToString(),
+                                    Text = facultyOffice.Name
+                                }), "Value", "Text"),
+                        "Chọn khoa",
+                        new { @class = "form-control faculty-selections" })
+                    <span asp-validation-for="SelectedFacultyOfficeId" class="text-danger"></span>
+                </div>
+            </div>
+          <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Môn học giảng dạy:<span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedSubjectIdsList,
+                        new SelectList(
+                            ((List<Subject>)ViewBag.Subjects)
+                                .Select(subject => new SelectListItem
+                                {
+                                    Value = subject.Id.ToString(),
+                                    Text = subject.Name
+                                }), "Value", "Text"),
+                        "Chọn môn học",
+                        new { @class = "form-control department-selections" })
+                    <span asp-validation-for="SelectedSubjectIdsList" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-content-footer">
+            <div class="button-admin">
+                <button type="submit" class="button-admin-link">Lưu lại</button>
+            </div>
+            <div class="button-admin">
+                <a asp-controller="Department" asp-action="Index" class="button-admin-link">Quay lại</a>
+            </div>
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

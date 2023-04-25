@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CSE_website</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/fontawesome5/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.css" />
+    <link rel="stylesheet" href="~/lib/animate/animate.min.css" />
+    <link rel="stylesheet" href="~/lib/waves/waves.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href='@Html.Raw("https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css")' rel="stylesheet"
+        type="text/css" />
+
+
+    <!-- Admin css -->
+    <link rel="stylesheet" href="~/admin_theme/css/themify-icons.css" />
+    <link rel="stylesheet" href="~/admin_theme/css/template.css" />
+    <link rel="stylesheet" href="~/admin_theme/css/animations.css" />
+    <link rel="stylesheet" href="~/admin_theme/css/site.css" />
+    <link rel="stylesheet" href="~/admin_theme/css/responsive.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/datatable/jquery.dataTables.min.css">
+    <!-- HTML5 element support for IE6-8 -->
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+        <![endif]-->
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+    @RenderSectionAsync("Styles", required: false)
+</head>
+
+<body class="admin-home fixed-sidebar fixed-header skin-default">
+    <div class="wrapper">
+        <!-- Preloader -->
+        <div class="preloader"></div>
+
+        <!-- Sidebar -->
+        <div class="site-overlay"></div>
+
+        <div class="site-sidebar">
+            <div class="custom-scroll custom-scroll-light overflow-auto">
+                <ul class="sidebar-menu">
+                    <li class="menu-title">Chức năng chính</li>
+                    <li class="with-sub">
+                        <a href="#" class="waves-effect waves-light sidebar-parent">
+                            <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                            <span class="s-icon"><i class="fas fa-anchor"></i></span>
+                            <span class="s-text">Bài viết</span>
+                        </a>
+                        <ul>
+                            <li><a asp-controller="Category" asp-action="Index">Danh mục bài viết</a></li>
+                            <li><a asp-controller="Post" asp-action="Index">Bài viết</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Partner" asp-action="Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fas fa-handshake"></i></span>
+                            <span class="s-text">Đối tác</span>
+                        </a>
+                    </li>
+                    <li class="menu-title">Giảng viên</li>
+                    <li class="">
+                        <a asp-controller="Account" asp-action="Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fas fa-user-alt"></i></span>
+                            <span class="s-text">Tài khoản</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Lecturer" asp-action="Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                            <span class="s-text">Giảng viên</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Department" asp-action="Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fas fa-graduation-cap"></i></span>
+                            <span class="s-text">Bộ môn</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Position" asp-action="Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fas fa-briefcase"></i></span>
+                            <span class="s-text">Chức vụ</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Subject" asp-action="Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fas fa-book-open"></i></span>
+                            <span class="s-text">Môn học</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a asp-controller="Research" asp-action="Index" class="waves-effect waves-light">
+                            <span class="s-icon"><i class="fab fa-researchgate"></i></span>
+                            <span class="s-text">Lĩnh vực nghiên cứu</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Sidebar second -->
+        <!-- Header -->
+        <header id="admin-header" class="site-header">
+            <div class="admin-header-container">
+                <div class="admin-header-container-inner">
+                    <nav class="navbar navbar-expand-md navbar-light bg-light p-0">
+                        <div class="container-fluid px-0 position-relative">
+                            <div class="navbar-left">
+                                <a class="navbar-brand" href="?TrangChu">
+                                    <div class="logo">
+                                        <img src="~/uploads/logo/CSE_logo-white.png" alt="logo CSE"
+                                            class="img-height-fluid" />
+                                    </div>
+                                </a>
+                            </div>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="navbar-right collapse navbar-collapse" id="navbarSupportedContent">
+                                <div class="toggle-button light sidebar-toggle-second float-xs-left hidden-sm-down">
+                                    <span class="hamburger"></span>
+                                </div>
+                                <div class="hidden-sm-down">
+                                    <a class="nav-link toggle-fullscreen">
+                                        <i class="fas fa-expand-arrows-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="div-formsearch">
+                                    <form action="" class="d-flex">
+                                        <input type="text" class="form-control" placeholder="Search for...">
+                                        <button type="submit" class="btn"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div>
+                                <ul class="navbar-nav ms-auto mb-0">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="avatar box-48">
+                                                <img src="~/uploads/image/NguyenNgocDoanh.jpg" alt="" class="img-fluid">
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword"><i class="fas fa-key"></i> Đổi mật
+                                                    khẩu</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Login" asp-action="Logout" asp-area="Admin"
+                                                    id="usHeader_btnLogout" class="dropdown-item">
+                                                    <i class="fas fa-power-off"></i>
+                                                    Đăng xuất
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="main-wrapper">
+            <div class="main">
+                <div class="main-content">
+                    <div class="main-content-container">
+                        <div class="main-content-container-inner">
+                            <div class="content-area">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer" class="footer">
+            <div class="footer-container container-fluid">
+                <div class="footer-container-inner">
+                    <div class=" text-center mb-5 mb-sm-0">
+                        2023 © Khoa Công Nghệ Thông Tin - Đại học Thủy Lợi
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.js"></script> -->
+<!-- General js -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-ui/jquery-ui.js"></script>
+<script src="~/lib/bootstrap/bootstrap-5.0.2/js/bootstrap.js"></script>
+<script src="~/lib/detectmobilebrowser/detectmobilebrowser.js"></script>
+<!-- the jquery fullscreen script -->
+<script src="~/lib/jquery-fullscreen-plugin/jquery.fullscreen-min.js"></script>
+<!-- the waves script -->
+<script src="~/lib/waves/waves.min.js"></script>
+
+<!-- DataTable, Select 2 and TagsInput -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src='@Html.Raw("https://cdn.jsdelivr.net/npm/@yaireo/tagify")'></script>
+<script src='@Html.Raw("https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js")'></script>
+
+
+<!-- Admin js -->
+<script src="~/lib/bootstrap/datatable/jquery.dataTables.min.js"></script>
+<script src="~/admin_theme/js/site.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</html>

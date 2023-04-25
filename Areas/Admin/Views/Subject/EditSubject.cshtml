@@ -1,0 +1,102 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@using SelectListItem = Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+@using CSE_website.Models
+@model Subject
+@{
+    ViewData["Title"] = "Cập nhật thông tin";
+}
+
+<div class="site-content">
+    <div class="site-content-title">
+        <h3>Cập nhật thông tin</h3>
+    </div>
+
+      <form asp-action="EditSubject" enctype="multipart/form-data" >
+        <div class="site-content-main">
+            <div class="mb-3 row site-content-item">
+                <label for="inputPartnerId" class="col-sm-2 col-form-label">ID Môn học:</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly disabled class="form-control" id="inputPartnerId" placeholder="ID Môn học">
+                </div>
+            </div>
+
+            <div class="mb-3 row site-content-item">
+                <label for="inputName" class="col-sm-2 col-form-label">Tên môn học: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Name" class="form-control" id="inputName" placeholder="Tên môn học">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+           <div class="mb-3 row site-content-item">
+                <label for="editorDesc" class="col-sm-2 col-form-label">Mô tả: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    <textarea name="Decription" asp-for="Decription" id="editorDesc"></textarea>
+                    <span asp-validation-for="Decription" class="text-danger"></span>
+                </div>
+            </div>
+              <div class="mb-3 row site-content-item">
+                <label for="inputOrder" class="col-sm-2 col-form-label">Số tín chỉ:<span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    <input type="number" asp-for="Credit" class="form-control" id="inputOrder" placeholder="Số tín chỉ">
+                    <span asp-validation-for="Credit" class="text-danger"></span>
+                </div>
+            </div>
+           
+              
+        <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Bộ môn:<span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedDepartmentIdsList,
+                        new SelectList(
+                            ((List<Department>)ViewBag.Departments)
+                                .Select(department => new SelectListItem
+                                {
+                                    Value = department.Id.ToString(),
+                                    Text = department.Name
+                                }), "Value", "Text"),
+                      
+                        new { @class = "form-control department-selections" })
+                    <span asp-validation-for="SelectedDepartmentIdsList" class="text-danger"></span>
+                </div>
+        </div>
+            
+            
+              <div class="mb-3 row site-content-item">
+                <label for="inputLogo" class="col-sm-2 col-form-label">File đề cương:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="file" asp-for="OutlineFile"  onchange="readURL(this);">
+                     <input type="hidden" value="@Model.Outline" name="ImageUrl" />
+                </div>
+            </div>
+        <div class="site-content-footer">
+            <div class="button-admin">
+                <button type="submit" class="button-admin-link" >Lưu lại</button>
+            </div>
+            <div class="button-admin">
+                <a asp-controller="Subject" asp-action="Index" class="button-admin-link">Quay lại</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        
+    }
+
+        <script>
+        ClassicEditor
+            .create(document.querySelector('#editorDesc'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+
+    </script>
+}

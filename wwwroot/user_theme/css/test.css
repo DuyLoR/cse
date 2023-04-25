@@ -1,0 +1,32 @@
+.sidebar-content-title {
+    display: flex;
+    padding: 80px 24px 8px;
+}
+
+
+
+.sidebar-container-right {
+    padding-left: 16px;
+}
+
+/* Admissions Start */
+.sidebar-header-container {
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    background-color: var(--bg-gray);
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.sidebar-header-title {
+    font-size: 16px;
+    color: #383838;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+.sidebar-recent-post-content {
+    margin-bottom: 16px;
+}
+
+
+/* Admissions End */

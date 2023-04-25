@@ -1,0 +1,89 @@
+@{
+    ViewData["Title"] = "Quản lý lĩnh vực nghiên cứu";
+}
+
+<div class="site-content">
+    <div class="site-content-title ">
+        <h3>Danh sách lĩnh vực nghiên cứu</h3>
+        <a asp-controller="Research" asp-action="AddResearch">
+            <i class="fas fa-plus"></i>
+            <span>Thêm mới</span> 
+        </a>
+    </div>
+
+    <div class="site-content-main">
+    <table id="research-datatable" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th class="table-title">STT</th>
+                <th class="table-title">Tên lĩnh vực</th>
+                <th class="table-title">Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Cơ sở dữ liệu</td>
+            <td>
+            <div class="icon-row">
+                <a title="Sửa lĩnh vực nghiên cứu" asp-controller="Research" asp-action="EditResearch"><i class="fas fa-edit class-edit"></i></a>
+                <!-- Button trigger modal -->
+                <a title="Xóa lĩnh vực nghiên cứu" class="color-red" data-bs-toggle="modal" data-bs-target="#exampleModal" asp-controller="Research">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade modal-delete" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa lĩnh vực nghiên cứu này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-close-2" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="deleteBtn">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#exampleModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+                modal.find('#deleteBtn').off('click').on('click', function () {
+                    window.location.href = '/Admin/Account/DeleteAccount/' + id;
+                });
+            });
+
+            // DataTable
+            $("#research-datatable").dataTable({
+                language: {
+                    search: "Tìm kiếm:",
+                    lengthMenu: "Hiển thị _MENU_ bản ghi trên trang",
+                    zeroRecords: "Không tìm thấy bản ghi phù hợp!",
+                    info: "Hiển thị từ _START_ đến _END_ của tổng số _TOTAL_ bản ghi",
+                    infoFiltered: " - được lọc từ _MAX_ bản ghi",
+                    infoEmpty: "Không có bản ghi để hiển thị ",
+                    paginate: {
+                        previous: "Trước",
+                        next: "Tiếp",
+                    },
+                },
+            });
+        });
+    </script>
+}

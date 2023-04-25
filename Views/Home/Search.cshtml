@@ -1,0 +1,86 @@
+@using CSE_website.Models
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IPagedList<Post>
+
+@{
+    ViewData["Title"] = "Tìm kiếm";
+}
+
+<div class="main">
+    <div class="main-content">
+        <div class="main-content-container container">
+            <div class="main-content-container-inner">
+                <div class="mb-3 row search-container">
+                    <label for="inputSearch" class="col-sm-3 col-form-label">Nhập từ khóa tìm kiếm: </label>
+                    <div class="input-group col-sm-9">
+                        <input type="text" class="form-control" id="inputSearch">
+                        <button class="btn btn-button" type="button" id="button-addon2">Tìm kiếm</button>
+                    </div>
+                </div>
+
+                <div class="result-container">
+                    <ul class="result-post mx-3">
+                        <li class="result-post-item row">
+                            <div class="post-item-image col-3">
+                                <a href="#">
+                                    <img src="~/uploads/hanhtrinhmaitruong.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="post-item-content col-9">
+                                <div class="post-item-title">
+                                    <a href="#" rel="tag">
+                                        Lịch tuần 08 khoa CNTT năm học 2018-2019
+                                    </a>
+                                </div>
+                                <div class="post-item-time">
+                                    <span>12/12/2018 1:20/17</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="result-post-item row">
+                            <div class="post-item-image col-3">
+                                <a href="#">
+                                    <img src="~/uploads/hanhtrinhmaitruong.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="post-item-content col-9">
+                                <div class="post-item-title">
+                                    <a href="#" rel="tag">
+                                        Lịch tuần 08 khoa CNTT năm học 2018-2019
+                                    </a>
+                                </div>
+                                <div class="post-item-time">
+                                    <span>12/12/2018 1:20/17</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="result-post-item row">
+                            <div class="post-item-image col-3">
+                                <a href="#">
+                                    <img src="~/uploads/hanhtrinhmaitruong.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="post-item-content col-9">
+                                <div class="post-item-title">
+                                    <a href="#" rel="tag">
+                                        Lịch tuần 08 khoa CNTT năm học 2018-2019
+                                    </a>
+                                </div>
+                                <div class="post-item-time">
+                                    <span>12/12/2018 1:20/17</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="text-center mt-3 mb-30">
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new
+                    PagedListRenderOptions() { LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] {
+                    "page-link" } })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

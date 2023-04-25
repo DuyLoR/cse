@@ -1,0 +1,75 @@
+﻿@model X.PagedList.IPagedList<CSE_website.Models.Lecturer>
+
+@{
+    ViewData["Title"] = "Đội ngũ giảng viên";
+    Layout = "~/Views/Shared/_LayoutLecturer.cshtml";
+    // Gán một mảng vào ViewData
+    ViewData["Breadcrumbs"] = new string[] { "Intro", "Intro" };
+    ViewData["BreadcrumbsText"] = new string[] { "Giới thiệu", "Đội ngũ giảng viên" };
+    ViewData["currentAction"] = new string[] { "Index", "Lecturer" };
+}
+
+<div class="block-article block-article-2">
+    <div class="block-article-header">
+        <h5 class="article-header-title article-header-title-main">Đội ngũ giảng viên khoa Công nghệ thông tin</h5>
+    </div>
+    <div class="block-article-content">
+        <div class="breadcrumbs breadcrumbs-bold">
+            <div class="breadcrumbs-bold-container">
+                @* _Breadcrumbs *@
+                @Html.Partial(Url.Content("~/Views/Shared/Block/_Breadcrumbs.cshtml"))
+            </div>
+        </div>
+        <div class="lecturers-content">
+            @foreach (var lecturer in @Model)
+            {
+                <div class="lecturers-content-item">
+                    <div class="lecturers-content-avatar">
+                        <a asp-controller="Intro" asp-action="LecturerDetails" asp-route-id="@lecturer.Id">
+                            <img src="~/@lecturer.Image" alt="Image lecturer">
+                        </a>
+                    </div>
+                    <div class="lecturers-content-info">
+                        <span class="lecturers-content-position">@lecturer.Position</span>
+                        <a asp-controller="Intro" asp-action="LecturerDetails" asp-route-id="@lecturer.Id"
+                            class="lecturers-content-name d-inline-block">
+                            @if (lecturer.Rank is not null)
+                            {
+                                <span>@lecturer.Rank. @lecturer.Name</span>
+                            }
+                            else
+                            {
+                                <span>@lecturer.Name</span>
+                            }
+                        </a>
+                        <span class="lecturers-content-department">@lecturer?.Department?.Name</span>
+                        <div class="lecturers-content-email">
+                            @if (lecturer.Email is not null)
+                            {
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:@lecturer.Email">@lecturer.Email</a>
+                            }
+                        </div>
+                        <div class="lecturers-content-phone mt-2 mb-3">
+                            @if (lecturer.Phone is not null)
+                            {
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:@lecturer.Phone">@lecturer.Phone</a>
+                            }
+                        </div>
+                        @foreach (var researchArea in @lecturer.SplitResearchArea())
+                        {
+                            <span class="lecturers-content-research">- @researchArea.Trim()</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Sidebar {
+    <partial name="_TopExperts" model="@ViewBag.Lecturers" />
+}
+
+<partial name="_Paging" model="@Model" />

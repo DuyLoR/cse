@@ -1,0 +1,221 @@
+@model Lecturer
+
+@{
+    ViewData["Title"] = "Chi tiết giảng viên";
+    Layout = "~/Views/Shared/_LayoutLecturer.cshtml";
+    // Gán một mảng vào ViewData
+    ViewData["Breadcrumbs"] = new string[] { "Intro", "Intro", "Intro" };
+    ViewData["BreadcrumbsText"] = new string[] { "Giới thiệu", "Đội ngũ giảng viên", "Chi tiết giảng viên" };
+    ViewData["currentAction"] = new string[] { "Index", "Lecturer", "LecturerDetails" };
+}
+
+<div class="block-article block-article-2">
+    <div class="block-article-header">
+        <h5 class="article-header-title">Chi tiết giảng viên</h5>
+    </div>
+    <div class="block-article-content">
+        <div class="breadcrumbs breadcrumbs-bold">
+            <div class="breadcrumbs-bold-container">
+                @* _Breadcrumbs *@
+                @Html.Partial(Url.Content("~/Views/Shared/Block/_Breadcrumbs.cshtml"))
+            </div>
+        </div>
+        <div class="lecturers-container-statistics">
+            <div class="lecturers-statistics-left col-8">
+                <h3 class="lecturers-statistics-left-name">
+                    @if (Model.Rank is not null)
+                    {
+                        <span>@Model.Rank. @Model.Name</span>
+                    }
+                    else
+                    {
+                        <span>@Model.Name</span>
+                    }
+                </h3>
+                <span class="lecturers-statistics-position">
+                    @Model.Position
+                    @* Công nghệ thông tin *@
+                </span>
+                @{
+                    var researchAreas = Model.SplitResearchArea();
+                    if (researchAreas.Length > 0)
+                    {
+                        <h3 class="lecturers-statistics-research-title">Lĩnh vực nghiên cứu:</h3>
+                        <ol class="lecturers-statistics-research list-group list-group-numbered">
+                            @foreach (var researchArea in @Model.SplitResearchArea())
+                            {
+                                <li class="lecturers-content-research">@researchArea.Trim()</li>
+                            }
+                        </ol>
+                    }
+                }
+                @{
+                    var achivements = Model.SplitResearchArea();
+                    if (achivements.Length > 0)
+                    {
+                        <h3 class="lecturers-statistics-research-title">Thành tựu nổi bật:</h3>
+                        <ol class="lecturers-statistics-research list-group list-group-numbered">
+                            @foreach (var achivement in @Model.SplitAchivements())
+                            {
+                                <li class="lecturers-content-research">@achivement.Trim()</li>
+                            }
+                        </ol>
+                    }
+                }
+                <span class="lecturers-statistics-quantity">
+                    Số lượng công bố/ đề tài:
+                </span>
+                <table class="table table-striped lecturers-statistics-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Loại</th>
+                            <th scope="col">Tổng số</th>
+                            <th scope="col">2023</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tạp chí</td>
+                            <td>3</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Hội thảo</td>
+                            <td>2</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Đề tài</td>
+                            <td>4</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="lecturers-statistics-right col-4">
+                <div class="lecturers-statistics-container">
+                    <img class="lecturers-statistics-avatar" src="~/@Model.Image" alt="">
+                    <span class="lecturers-statistics-name">
+                        @Model.Name
+                    </span>
+                    <div class="lecturers-statistics-degree">
+                        <b>Học hàm / Học vị: </b>
+                        <span>@Model.Rank</span>
+                    </div>
+                    @if (Model.FacultyOffice?.Name is not null)
+                    {
+                        <div class="lecturers-statistics-faculty">
+                            <b>Khoa: </b>
+                            <span>@Model.FacultyOffice.Name</span>
+                        </div>
+                    }
+                    @if (Model.Department?.Name is not null)
+                    {
+                        <div class="lecturers-statistics-department">
+                            <b>Bộ môn: </b>
+                            <span>@Model.Department.Name</span>
+                        </div>
+                    }
+                    <div class="lecturers-statistics-email">
+                        @if (Model.Email is not null)
+                        {
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:@Model.Email">@Model.Email</a>
+                        }
+                    </div>
+                    <div class="lecturers-statistics-phone">
+                        @if (Model.Phone is not null)
+                        {
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:@Model.Phone">@Model.Phone</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lecturers-menu-container">
+            <div class="tab-container">
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'tab1')">
+                        <i class="fas fa-book-open"></i>
+                        Môn học giảng dạy
+                        <span>(@Model.Subjects?.Count)</span>
+                    </button>
+                    <button class="tablinks" onclick="openTab(event, 'tab2')">
+                        <i class="fas fa-globe-asia">
+                        </i>
+                        Công bố
+                        <span>(3)</span>
+                    </button>
+                    <button class="tablinks" onclick="openTab(event, 'tab3')">
+                        <i class="fas fa-map">
+                        </i>
+                        Đề tài
+                        <span>(3)</span>
+                    </button>
+                    <button class="tablinks" onclick="openTab(event, 'tab4')">
+                        <i class="far fa-edit">
+                        </i>
+                        Blog cá nhân
+                        <span>(3)</span>
+                    </button>
+                </div>
+
+                <div id="tab1" class="tabcontent">
+                    <h3>Môn học thuộc chuyên môn giảng dạy</h3>
+                    <ol class="list-group list-group-numbered">
+                        @foreach (var subject in Model.Subjects)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">
+                                        <a href="#">@subject.Name</a>
+                                    </div>
+                                    @* Cras justo odio => Details *@
+                                </div>
+                                @* <span class="badge bg-primary rounded-pill">14</span> *@
+                            </li>
+                        }
+                    </ol>
+                </div>
+                <div id="tab2" class="tabcontent">
+                    <h3>Các công bố của giảng viên</h3>
+                </div>
+                <div id="tab3" class="tabcontent">
+                    <h3>Các đề tài nghiên cứu của giảng viên</h3>
+                </div>
+                <div id="tab4" class="tabcontent">
+                    <div class="button-primary">
+                        <a class="button-text" href="@Model.LinkBlog">
+                            <i class="fas fa-tachometer-alt me-1"></i>
+                            Truy cập blog
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Sidebar {
+    <partial name="_TopExperts" model="@ViewBag.Lecturers" />
+}
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.getElementById("tab1").click(); // Tự động chọn tab đầu tiên khi tải trang
+</script>

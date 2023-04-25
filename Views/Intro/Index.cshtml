@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Tổng quan về khoa";
+    // Gán một mảng vào ViewData
+    ViewData["Breadcrumbs"] = new string[] { "Home", "Intro" };
+    ViewData["BreadcrumbsText"] = new string[] { "Trang chủ", "Giới thiệu" };
+    ViewData["currentAction"] = new string[] { "", "Index" };
+}
+
+<div class="main">
+    <div class="main-content">
+        <div class="main-content-container">
+            <div class="main-content-container-inner">
+                <div class="breadcrumbs">
+                    <div class="breadcrumbs-container container">
+                        @* _Breadcrumbs *@
+                        @Html.Partial(Url.Content("~/Views/Shared/Block/_Breadcrumbs.cshtml"))
+                    </div>
+                </div>
+
+                @* _DevelHistory *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_DevelHistory.cshtml"))
+
+                @* _Philosophy *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_Philosophy.cshtml"))
+
+                @* _Lecturers_Training_Cooperate *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_Lecturers_Training_Cooperate.cshtml"))
+            </div>
+        </div>
+    </div>
+</div>

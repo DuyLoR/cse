@@ -1,0 +1,138 @@
+@using CSE_website.Models;
+@model List<Partner>;
+@{
+    ViewData["Title"] = "Quản lý đối tác";
+      
+}
+
+<div class="site-content">
+    <div class="site-content-title ">
+        <h3>Danh sách đối tác</h3>
+        <a asp-controller="Partner" asp-action="AddPartner">
+            <i class="fas fa-plus"></i>
+            <span>Thêm mới</span>
+        </a>
+    </div>
+
+    <div class="site-content-main">
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div id="msgAlert" class="alert alert-success" role="alert">
+                @ViewBag.SuccessMessage
+            </div>
+        }
+        <div id="successContainer"></div>
+        <table  class="table table-striped" style="width:100%" id="partner-datatable">
+            <thead>
+                <tr>
+                    <th class="table-title">STT</th>
+                    <th class="table-title">Tên đối tác</th>
+                    <th class="table-title">Logo</th>
+                    <th class="table-title">Tiêu đề</th>
+                    <th class="table-title">Nhóm tin</th>
+                    <th class="table-title">Thứ tự</th>
+                    <th class="table-title">Thứ hạng</th>
+                    <th class="table-title">Chức năng</th>
+                </tr>
+            </thead>
+                <tbody></tbody>
+               
+        </table>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-delete" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa đối tác này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-close-2" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="deleteBtn">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    await Html.RenderPartialAsync("_ConfirmModalPartial");
+}
+
+@section Scripts
+    {
+    <script>
+        $('#partner-datatable').DataTable({
+            "ajax": "/Admin/Partner/GetAll",
+            "columns": [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        // Sử dụng meta.row + 1 để tính toán số thứ tự của hàng trong bảng
+                        return meta.row + 1;
+                    }
+                },
+                { "data": "Name" },
+                {
+                    "data": "Logo",
+                    "render": function (data) {
+                        return ` <img src="../${data}" alt="Image lecturer">`;
+                    }
+                },
+                { "data": "Title" },
+                { "data": "Category" },
+                { "data": "Order" },
+                { "data": "Type" },
+                {
+                    "data": "Id",
+                    "render": function (data, type, row) {
+                        var statusHtml = `<i class="fas fa-eye-slash class-eye-slash"></i>`;
+                        if (row?.Status) statusHtml = `<i class="fas fa-eye class-eye"></i>`;
+
+                        return `<div class="icon-row">
+                                    <a class="color-green" href="/Admin/Partner/Unactive/${data}">${statusHtml}</a> 
+                                    <a href="/Admin/Partner/EditPartner/${data}"><i class="fas fa-edit class-edit"></i></a> 
+                                    <a  class="delete-btn color-red" data-bs-toggle="modal" data-bs-target="#confirm-modal" href="/Admin/Partner/DeletePartner/${data}">
+                                        <i class="fas fa-trash-alt"></i> 
+                                    </a>  
+                                </div>`;
+                    }
+                },
+                // Hidden cols for getting data
+                {
+                    "data": "Status",
+                    "visible": false,
+                    "searchable": false,
+                },
+            ],
+            "createdRow": function (row, data, dataIndex) {
+                if (data?.Status == false) { // ở đây giả sử "Status" ở cột thứ 3 (index 2)
+                    $(row).addClass('inactive');
+                }
+            },
+            destroy: true,
+            language: {
+                search: "Tìm kiếm:",
+                lengthMenu: "Hiển thị _MENU_ bản ghi trên trang",
+                zeroRecords: "Không tìm thấy bản ghi phù hợp!",
+                info: "Hiển thị từ _START_ đến _END_ của tổng số _TOTAL_ bản ghi",
+                infoFiltered: " - được lọc từ _MAX_ bản ghi",
+                infoEmpty: "Không có bản ghi để hiển thị ",
+                paginate: {
+                    previous: "Trước",
+                    next: "Tiếp",
+                },
+            },
+        });
+
+        // Confirm modal handle
+        $('#confirm-modal').on('show.bs.modal', function (event) {
+            $(this).find('#del-modal-btn').off('click').on('click', function () {
+                location.href = $(event.relatedTarget).prop("href");
+            });
+        });
+    </script>
+}

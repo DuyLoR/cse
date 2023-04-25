@@ -1,0 +1,45 @@
+<div class="partner my-30">
+    <div class="partner-container container">
+        <div class="partner-container-inner">
+            <div class="block-title-top">
+                <div class="title-style-1 br-bottom">
+                    <h3>Hợp tác đối ngoại</h3>
+                </div>
+            </div>
+            <div class="owl-carousel partner-carousel">
+                <div class="partner-img">
+                    <img src="~/uploads/partner/banner-1.png" alt="" class="" />
+                </div>
+                <div class="partner-img">
+                    <img src="~/uploads/partner/banner-2.png" alt="" class="" />
+                </div>
+                <div class="partner-img">
+                    <img src="~/uploads/partner/banner-3.png" alt="" class="" />
+                </div>
+                <div class="partner-img">
+                    <img src="~/uploads/partner/banner-4.png" alt="" class="" />
+                </div>
+                <div class="partner-img">
+                    <img src="~/uploads/partner/banner-5.png" alt="" class="" />
+                </div>
+                @if (ViewBag.Partners != null)
+                {
+                    @foreach (var partner in ViewBag.Partners)
+                    {
+                        if (partner.Status == true)
+                        {
+                            <div class="partner-img">
+                                <img src="~/@partner.Logo" alt="" class="" />
+                            </div>
+                        }
+                        else
+                        {
+
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

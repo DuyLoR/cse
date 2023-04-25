@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Trang Chủ";
+}
+
+<div class="main">
+    <div class="main-content">
+        <div class="main-content-container">
+            <div class="main-content-container-inner">
+                @* _Banner *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_Banner.cshtml"))
+
+                @* _Services *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_Services.cshtml"))
+
+                @* _Notification *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_Notification.cshtml"))
+
+                @* _Events *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_Events.cshtml"))
+
+                @* _TypicalStudent *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_TypicalStudent.cshtml"))
+
+                @* _Partner *@
+                @Html.Partial(Url.Content("~/Views/Shared/Section/_Partner.cshtml"))
+            </div>
+        </div>
+    </div>
+</div>

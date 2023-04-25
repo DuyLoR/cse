@@ -1,0 +1,395 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@using SelectListItem = Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+@model Lecturer
+
+@section Styles
+{
+    @{ await Html.RenderPartialAsync("_Select2StylesPartial"); }
+    <style>
+        .select2-container .select2-selection--single
+        {
+            height: auto;
+        }
+        
+        .select2-container .select2-selection--single .select2-selection__rendered
+        {
+            padding-left: unset;
+        }
+    </style>
+}
+
+@{
+    ViewData["Title"] = "Thêm thông tin";
+}
+
+<div class="site-content">
+    <div class="site-content-title">
+        <h3>Thêm thông tin</h3>
+    </div>
+    <form id="submit-form" asp-action="Create" enctype="multipart/form-data">
+        <div class="site-content-main">
+            @{ await Html.RenderPartialAsync("_RequestBodyErrorPartial"); }
+
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Mã giảng viên: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    <input asp-for="LecturerCode" type="text" class="form-control"
+                           id="inputLecturerCode">
+                    <span asp-validation-for="LecturerCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Tên giảng viên: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" type="text" class="form-control"
+                           id="inputName">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Ảnh đại diện:</label>
+                <div class="col-sm-10">
+                    <input type="file" asp-for="ImageFile" class="form-control" id="inputAvatar" onchange="readURL(this);">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Học vị:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Rank,
+                        new SelectList(
+                            Lecturer.RankList
+                                .Select(rank => new SelectListItem
+                                {
+                                    Value = rank,
+                                    Text = rank
+                                }), "Value", "Text"),
+                        "Không",
+                        new { @class = "form-control rank-selections" })
+                    <span asp-validation-for="Rank" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Học hàm:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Degree,
+                        new SelectList(
+                            Lecturer.DegreeList
+                                .Select(degree => new SelectListItem
+                                {
+                                    Value = degree,
+                                    Text = degree
+                                }), "Value", "Text"),
+                        "Không",
+                        new { @class = "form-control degree-selections" })
+                    <span asp-validation-for="Degree" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Khoa:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedFacultyOfficeId,
+                        new SelectList(
+                            ((List<FacultyOffice>)ViewBag.FacultyOffices)
+                                .Select(facultyOffice => new SelectListItem
+                                {
+                                    Value = facultyOffice.Id.ToString(),
+                                    Text = facultyOffice.Name
+                                }), "Value", "Text"),
+                        new { @class = "form-control faculty-selections" })
+                    <span asp-validation-for="SelectedFacultyOfficeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Bộ môn:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedDepartmentId,
+                        new SelectList(
+                            ((List<Department>)ViewBag.Departments)
+                                .Select(department => new SelectListItem
+                                {
+                                    Value = department.Id.ToString(),
+                                    Text = department.Name
+                                }), "Value", "Text"),
+                        "Chọn bộ môn",
+                        new { @class = "form-control department-selections" })
+                    <span asp-validation-for="SelectedDepartmentId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputSubject" class="col-sm-2 col-form-label">Môn học giảng dạy:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedSubjectIdsList,
+                        new SelectList(
+                            ((List<Subject>)ViewBag.Subjects)
+                                .Select(subject => new SelectListItem
+                                {
+                                    Value = subject.Id.ToString(),
+                                    Text = subject.Name
+                                }), "Value", "Text"),
+                        new { @class = "form-control subject-selections", @multiple="multiple", @disabled=true })
+                    <span asp-validation-for="SelectedSubjectIdsList" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Chức vụ: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Position,
+                        new SelectList(
+                            Lecturer.PositionList
+                                .Select(position => new SelectListItem
+                                {
+                                    Value = position,
+                                    Text = position
+                                }), "Value", "Text"),
+                        new { @class = "form-control position-selections" })
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Giới tính: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Gender,
+                        new SelectList(
+                            Lecturer.GenderList
+                                .Select(gender => new SelectListItem
+                                {
+                                    Value = gender,
+                                    Text = gender
+                                }), "Value", "Text"),
+                        "Chọn giới tinh",
+                        new { @class = "form-control gender-selections" }
+                        )
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Email" type="email" class="form-control" id="inputEmail">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Số điện thoại:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Phone" type="text" class="form-control" id="inputPhone">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Link Blog:</label>
+                <div class="col-sm-10">
+                    <input asp-for="LinkBlog" type="text" class="form-control" id="LinkBlog">
+                    <span asp-validation-for="LinkBlog" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Lĩnh vực nghiên cứu (cách nhau bằng dấu /):</label>
+                <div class="col-sm-10">
+                    <textarea asp-for="ResearchArea" type="text" class="form-control" id="ResearchArea"></textarea>
+                    <span asp-validation-for="ResearchArea" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Thành tựu (cách nhau bằng dấu /):</label>
+                <div class="col-sm-10">
+                    <textarea asp-for="Achievements" type="text" class="form-control" id="inputAchievements"></textarea>
+                    <span asp-validation-for="Achievements" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Trạng thái: </label>
+                <div class="col-sm-10">
+                    <input asp-for="Status" type="checkbox" checked class="form-check form" id="inputStatus"></input>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="site-content-footer">
+            <div class="button-admin">
+                <button class="button-admin-link">Lưu lại</button>
+            </div>
+            <div class="button-admin">
+                <a asp-action="Index" class="button-admin-link">Quay lại</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    @{ await Html.RenderPartialAsync("_Select2ScriptsPartial"); }
+
+    <script>
+    $(document).ready(function () {
+        // Áp dụng plugin Select2 cho danh sách select option multiple và cho phép tìm kiếm
+        // Nhưng không cho phép thêm mới các tùy chọn
+        
+        $('.subject-selections').select2({
+            tags: true,
+            createTag: function() { return null; },
+            selectionCssClass: 'form-control',
+        });
+        
+        $('.rank-selections').select2({
+            tags: true,
+            createTag: function(params) {
+                var term = $.trim(params.term);
+
+                // Nếu không có giá trị được nhập vào hoặc giá trị đó đã tồn tại trong danh sách tùy chọn, trả về null
+                if (term === '' || $(params.option).length) {
+                    return null;
+                }
+
+                // Tạo một đối tượng tag mới với giá trị tương ứng
+                return {
+                    id: term,
+                    text: term,
+                    newTag: true // Đánh dấu đối tượng tag mới để phân biệt với các tag đã có sẵn
+                };
+            },
+            selectionCssClass: 'form-control',
+        });
+
+        $('.degree-selections').select2({
+            tags: true,
+            createTag: function(params) {
+                var term = $.trim(params.term);
+
+                // Nếu không có giá trị được nhập vào hoặc giá trị đó đã tồn tại trong danh sách tùy chọn, trả về null
+                if (term === '' || $(params.option).length) {
+                    return null;
+                }
+
+                // Tạo một đối tượng tag mới với giá trị tương ứng
+                return {
+                    id: term,
+                    text: term,
+                    newTag: true // Đánh dấu đối tượng tag mới để phân biệt với các tag đã có sẵn
+                };
+            },
+            selectionCssClass: 'form-control',
+        });
+
+        $('.position-selections').select2({
+            tags: true,
+            createTag: function(params) {
+                var term = $.trim(params.term);
+
+                // Nếu không có giá trị được nhập vào hoặc giá trị đó đã tồn tại trong danh sách tùy chọn, trả về null
+                if (term === '' || $(params.option).length) {
+                    return null;
+                }
+
+                // Tạo một đối tượng tag mới với giá trị tương ứng
+                return {
+                    id: term,
+                    text: term,
+                    newTag: true // Đánh dấu đối tượng tag mới để phân biệt với các tag đã có sẵn
+                };
+            },
+            selectionCssClass: 'form-control',
+        });
+        
+        $('.department-selections').select2({
+            tags: true,
+            createTag: function() { return null; },
+            selectionCssClass: 'form-control',
+        });
+        
+        $('.faculty-selections').select2({
+            tags: true,
+            createTag: function() { return null; },
+            selectionCssClass: 'form-control',
+        });
+        
+        $('.gender-selections').select2({
+            tags: true,
+            createTag: function() { return null; },
+            selectionCssClass: 'form-control',
+        });
+
+        // Apply change subject list
+        $(".department-selections").on("change", function() {
+            const select = $('.subject-selections');
+            if(!$(this).val())
+            {
+                select.prop("disabled", true);
+                select.val([]);
+                select.trigger('change');
+                return;
+            }
+
+            $.ajax({
+                url: "/Admin/Lecturer/GetAllSubjectsByDepartment/" + $(this).val(),
+                method: "POST",
+                success: function (rawJson) {
+                    if(rawJson != null)
+                    {
+                        // Parse data from raw
+                        const data = JSON.parse(rawJson);
+                        const filteredSubjectsList = data.subjects?.map(subject => ({ id: subject.Id, text: subject.Name }));
+                        
+                        // Reset subject selections
+                        select.prop("disabled", false);
+                        select.empty();
+                        $.each(filteredSubjectsList, function(index, subject) {
+                            select.append($('<option>').val(subject.id).text(subject.text));
+                        });
+                        select.trigger('change');
+                    }
+                },
+                error: function (errorThrown) {
+                    if (errorThrown.responseText) {
+                        alert("Có lỗi đã xảy ra vui lòng kiểm tra lại thông tin!");
+                    }
+                },
+                complete: function (jqXHR) {
+                    if(jqXHR.status !=  200) {} else {}
+                }
+            });
+        });
+
+        $(".subject-selections + .select2-container").on("click", function() {
+            if($('.subject-selections').prop("disabled"))
+            {
+                alert("Hãy chọn bộ môn trước khi thực hiện thêm môn học!");
+            }
+        });
+
+        $('#submit-form').on("submit", function (event) {
+            if ($('#inputName').val() === ""
+                || $('#Position').val() === ""
+                || !$('#Gender').val()
+            ) {
+                alert("Vui lòng nhập đầy đủ thông tin!");
+                event.preventDefault();
+            }
+        });
+        
+    });
+    </script>
+
+    @if (ViewData?.ModelState["SelectedSubjectIdsList"]?.Errors.Count > 0)
+    {
+        <script>
+            alert("Một lỗi không hợp lệ đã xảy ra vui lòng kiểm tra lại thông tin!");
+            location.href = "@Url.Action("Create", "Lecturer", new { area = "Admin" })";
+        </script>
+    }
+    @if(ViewBag?.Subjects?.Count == 0)
+    {
+        <script>
+            const select = $('.subject-selections');
+            if(!select.val())
+            {
+                select.prop("disabled", true);
+                select.val([]);
+                select.trigger('change');
+            }
+        </script>        
+    }
+}

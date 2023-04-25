@@ -1,0 +1,192 @@
+<header id="user-header" class="header">
+    <div class="user-header-container">
+        <div class="user-header-container-inner">
+            <div class="user-header-top hidden-md">
+                <div class="header-top-container container-lg">
+                    <div class="left d-flex">
+                        <div class="div-email">
+                            <a href="mailto:vpkcntt@tlu.edu.vn">
+                                <i class="icon-envelope far fa-envelope"></i>vpkcntt@tlu.edu.vn
+                            </a>
+                        </div>
+                        <div class="div-phone">
+                            <a href="tel:8402435632211">
+                                <i class="icon-alt fas fa-phone"></i>(+84) - 024 3 5632211
+                            </a>
+                        </div>
+                    </div>
+                    <div class="middle middle-PC">
+                        <p>Khoa công nghệ thông tin Đại học Thủy Lợi</p>
+                    </div>
+                    <div class="middle middle-Tab">
+                        <p>CSE - TLU</p>
+                    </div>
+                    <div class="right d-flex">
+                        <div class="login">
+                            <a asp-area="Admin" asp-controller="Login" asp-action="Index">Đăng nhập</a>
+                        </div>
+                        <div class="contact">
+                            <a asp-controller="Contact" asp-action="Index">Liên hệ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-header-bottom menu-header">
+                <div class="menu-header-container container-lg container-fluid">
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid navbar-container">
+                            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                                <div class="header-logo">
+                                    <div class="header-logo-img">
+                                        <img src="~/uploads/logo/logo-full.png" alt="Logo Khoa công nghệ thông tin"
+                                            class="d-xl-block d-lg-none" />
+                                        <img src="~/uploads/logo/CSE_logo.png" alt="Logo Khoa công nghệ thông tin"
+                                            class="d-xl-none d-lg-block d-none" />
+                                    </div>
+                                </div>
+                            </a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navHeader" aria-controls="navHeader" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            @* Category list *@
+                            <div class="collapse navbar-collapse" id="navHeader">
+                                <ul class="navbar-nav mb-2 mb-lg-0">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" asp-controller="Intro" asp-action="Index"
+                                            id="nD1" role="button" aria-expanded="false" aria-current="page">
+                                            Giới thiệu
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="nD1">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Intro" asp-action="Index">Tổng
+                                                    quan về khoa</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Intro"
+                                                    asp-action="OrganizationalStructure">Cơ cấu tổ chức</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Intro"
+                                                    asp-action="Lecturer">Đội ngũ giảng viên</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" asp-controller="EduProgram"
+                                            asp-action="Index" id="nD2" role="button" aria-expanded="false"
+                                            aria-current="page">
+                                            Đào tạo
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="nD2">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="EduProgram"
+                                                    asp-action="Description">Chương trình đào tạo</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="EduProgram"
+                                                    asp-action="Regulations">Quy chế đào tạo</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" asp-controller="Admissions"
+                                            asp-action="Index" id="nD3" role="button" aria-expanded="false"
+                                            aria-current="page">
+                                            Tuyển sinh
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="nD3">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Admissions"
+                                                    asp-action="University">Đại học</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Admissions"
+                                                    asp-action="Master">Thạc sĩ</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Admissions"
+                                                    asp-action="Doctor">Tiến sĩ</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Admissions"
+                                                    asp-action="Degree2">Văn bằng 2</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" asp-controller="Enterprise"
+                                            asp-action="Index" id="nD4" role="button" aria-expanded="false"
+                                            aria-current="page">
+                                            Doanh nghiệp
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="nD4">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Enterprise"
+                                                    asp-action="Partner">Đối tác</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Enterprise"
+                                                    asp-action="Internship">Thực tập doanh nghiệp</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Enterprise"
+                                                    asp-action="Job">Việc làm</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" asp-controller="ScienceAndTechnology"
+                                            asp-action="Index" id="nD4" role="button" aria-expanded="false"
+                                            aria-current="page">
+                                            Khoa học công nghệ
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="nD4">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="ScienceAndTechnology"
+                                                    asp-action="ScientificPublication">Công bố khoa học</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="ScienceAndTechnology"
+                                                    asp-action="ScienceResearchTopic">Đề tài NCKH</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="ScienceAndTechnology"
+                                                    asp-action="ApplicationDeployment">Triển khai ứng dụng </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="ScienceAndTechnology"
+                                                    asp-action="Researchers">Các nhóm nghiên cứu</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" asp-controller="ForeignCoop"
+                                            asp-action="Index" id="nD5" role="button" aria-expanded="false"
+                                            aria-current="page">
+                                            Hợp tác đối ngoại
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="nD5">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="ForeignCoop"
+                                                    asp-action="CooperationProgram">Chương trình hợp tác</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="ForeignCoop"
+                                                    asp-action="InternationalPartners">Đối tác quốc tế</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <button class="btn-search" id="search-content">
+                                    <i class="icon-alt fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

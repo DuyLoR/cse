@@ -1,0 +1,30 @@
+@{
+    var breadcrumbs = ViewData["Breadcrumbs"] as string[];
+    var breadcrumbs_text = ViewData["BreadcrumbsText"] as string[];
+    var currentActions = ViewData["currentAction"] as string[];
+}
+
+<ul class="breadcrumbs-inner">
+    @if (breadcrumbs != null)
+    {
+        @for (var i = 0; i < breadcrumbs.Length; i++)
+        {
+            var breadcrumb = breadcrumbs[i] as string;
+            var breadcrumb_text = breadcrumbs_text[i] as string;
+            var currentAction = currentActions[i] as string;
+            if (i == breadcrumbs.Length - 1)
+            {
+                <li>
+                    <a asp-controller="@breadcrumb" asp-action="@currentAction" class="active" style="">@breadcrumb_text</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a asp-controller="@breadcrumb" asp-action="@currentAction">@breadcrumb_text</a>
+                    <i class="fas fa-angle-right"></i>
+                </li>
+            }
+        }
+    }
+</ul>

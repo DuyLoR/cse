@@ -1,0 +1,168 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@using SelectListItem = Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+@model Category
+
+@{
+    ViewData["Title"] = "Cập nhật thông tin";
+}
+
+@section Styles
+{
+    @{ await Html.RenderPartialAsync("_Select2StylesPartial"); }
+    <style>
+        .select2-container .select2-selection--single
+        {
+            height: auto;
+        }
+        
+        .select2-container .select2-selection--single .select2-selection__rendered
+        {
+            padding-left: unset;
+        }
+
+        .ck-editor__editable {
+            min-height: 250px;
+        }
+    </style>    
+}
+
+<div class="site-content">
+    <div class="site-content-title">
+        <h3>CẬp nhật thông tin</h3>
+    </div>
+
+    <form method="POST" asp-action="EditCategory" asp-controller="Category" >
+        <input type="hidden" asp-for="Id" />
+        <div class="site-content-main">
+            <div class="mb-3 row site-content-item">
+                <label for="inputTitle" class="col-sm-2 col-form-label">Tiêu đề:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" type="text" class="form-control" id="inputTitle" placeholder="Tiêu đề">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="editorDesc" class="col-sm-2 col-form-label">Mô tả: </label>
+                <div class="col-sm-10">
+                    <textarea asp-for="Description" id="editorDesc" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputOrder" class="col-sm-2 col-form-label">Thứ tự:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Order" type="text" readonly class="form-control" id="inputOrder" placeholder="Thứ tự">
+                    <span asp-validation-for="Order" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputLevel" class="col-sm-2 col-form-label">Cấp độ:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Level" type="text" readonly class="form-control" id="inputLevel" placeholder="Cấp độ">
+                    <span asp-validation-for="Level" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputLink" class="col-sm-2 col-form-label">Đường dẫn liên kết:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Link" type="text" class="form-control" id="inputLink" placeholder="Đường dẫn">
+                    <span asp-validation-for="Link" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputTarget" class="col-sm-2 col-form-label">Kiểu kích hoạt:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Target,
+                        new SelectList(Category.TargetTypesList, "Key", "Value"),
+                        new { @class = "form-control target-selections" })
+                    <span asp-validation-for="Target" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputType" class="col-sm-2 col-form-label">Loại danh mục:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Type,
+                        new SelectList(Category.TypesList, "Key", "Value"),
+                        new { @class = "form-control type-selections" })
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputLecturer" class="col-sm-2 col-form-label">Giảng viên phụ trách chuyên mục:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.SelectedLecturerId,
+                        new SelectList(
+                            ((List<Lecturer>)ViewBag.ManageLecturersList)
+                                .Select(lecturer => new SelectListItem
+                                {
+                                    Value = lecturer.Id.ToString(),
+                                    Text = lecturer.Name
+                                }), "Value", "Text"),
+                        "Không",
+                        new { @class = "form-control lecturer-selections" }
+                    )
+                    <span asp-validation-for="SelectedLecturerId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3 row site-content-item">
+                <label for="inputStatus"
+                    class="col-sm-2 col-form-label form-check-label">Hiển thị:</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    <input asp-for="Status" class="form-check-input" type="checkbox" checked id="inputStatus">
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="site-content-footer">
+            <div class="button-admin">
+                <button class="button-admin-link">Lưu lại</button>
+            </div>
+            <div class="button-admin">
+                <a asp-controller="Category" asp-action="Index" class="button-admin-link">Quay lại</a>
+            </div>
+        </div>
+    </form> 
+</div>
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    @{ await Html.RenderPartialAsync("_Select2ScriptsPartial"); }
+    <script>
+        ClassicEditor.create(document.querySelector("#editorDesc"))
+            .then((editor) => {
+                console.log(editor);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        
+        $('.lecturer-selections').select2({
+            tags: true,
+            createTag: function() { return null; },
+            selectionCssClass: 'form-control',
+        });
+
+        $('.target-selections').select2({
+            tags: true,
+            createTag: function() { return null; },
+            selectionCssClass: 'form-control',
+        });
+
+        $('.type-selections').select2({
+            tags: true,
+            createTag: function() { return null; },
+            selectionCssClass: 'form-control',
+        });
+        
+        $('#submit-form').on("submit", function(event) {
+            if($('#inputTitle').val() === "") {
+                alert("Vui lòng nhập đầy đủ thông tin!");
+                event.preventDefault();
+            }
+        });
+    </script>
+}

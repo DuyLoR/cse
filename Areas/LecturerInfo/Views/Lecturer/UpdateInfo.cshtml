@@ -1,0 +1,186 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SelectList = Microsoft.AspNetCore.Mvc.Rendering.SelectList
+@using SelectListItem = Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+@model Lecturer
+
+@{
+    ViewData["Title"] = "Cập nhật thông tin";
+}
+
+<div class="site-content">
+    <div class="site-content-title">
+        <h3>Cập nhật thông tin</h3>
+    </div>
+    <form id="submit-form" asp-action="Create" enctype="multipart/form-data">
+        <div class="site-content-main">
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Tên giảng viên: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" type="text" class="form-control"
+                           id="inputName">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Ảnh đại diện:</label>
+                <div class="col-sm-10">
+                    <input type="file" asp-for="ImageFile" class="form-control" id="inputAvatar" onchange="readURL(this);">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Học vị:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Rank,
+                        new SelectList(
+                            Lecturer.RankList
+                                .Select(rank => new SelectListItem
+                                {
+                                    Value = rank,
+                                    Text = rank
+                                }), "Value", "Text"),
+                        "Không",
+                        new { @class = "form-control rank-selections" })
+                    <span asp-validation-for="Rank" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Học hàm:</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Degree,
+                        new SelectList(
+                            Lecturer.DegreeList
+                                .Select(degree => new SelectListItem
+                                {
+                                    Value = degree,
+                                    Text = degree
+                                }), "Value", "Text"),
+                        "Không",
+                        new { @class = "form-control degree-selections" })
+                    <span asp-validation-for="Degree" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Khoa:</label>
+                <div class="col-sm-10">
+                    @* @Html.DropDownListFor(m => m.SelectedFacultyOfficeId,
+                        new SelectList(
+                            ((List<FacultyOffice>)ViewBag.FacultyOffices)
+                                .Select(facultyOffice => new SelectListItem
+                                {
+                                    Value = facultyOffice.Id.ToString(),
+                                    Text = facultyOffice.Name
+                                }), "Value", "Text"),
+                        new { @class = "form-control faculty-selections" }) *@
+                    <span asp-validation-for="SelectedFacultyOfficeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Bộ môn:</label>
+                <div class="col-sm-10">
+                    @* @Html.DropDownListFor(m => m.SelectedDepartmentId,
+                        new SelectList(
+                            ((List<Department>)ViewBag.Departments)
+                                .Select(department => new SelectListItem
+                                {
+                                    Value = department.Id.ToString(),
+                                    Text = department.Name
+                                }), "Value", "Text"),
+                        "Chọn bộ môn",
+                        new { @class = "form-control department-selections" }) *@
+                    <span asp-validation-for="SelectedDepartmentId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label for="inputSubject" class="col-sm-2 col-form-label">Môn học giảng dạy:</label>
+                <div class="col-sm-10">
+                    @* @Html.DropDownListFor(m => m.SelectedSubjectIdsList,
+                        new SelectList(
+                            ((List<Subject>)ViewBag.Subjects)
+                                .Select(subject => new SelectListItem
+                                {
+                                    Value = subject.Id.ToString(),
+                                    Text = subject.Name
+                                }), "Value", "Text"),
+                        new { @class = "form-control subject-selections", @multiple="multiple", @disabled=true }) *@
+                    <span asp-validation-for="SelectedSubjectIdsList" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Chức vụ: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Position,
+                        new SelectList(
+                            Lecturer.PositionList
+                                .Select(position => new SelectListItem
+                                {
+                                    Value = position,
+                                    Text = position
+                                }), "Value", "Text"),
+                        new { @class = "form-control position-selections" })
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Giới tính: <span class="star-maker">*</span></label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.Gender,
+                        new SelectList(
+                            Lecturer.GenderList
+                                .Select(gender => new SelectListItem
+                                {
+                                    Value = gender,
+                                    Text = gender
+                                }), "Value", "Text"),
+                        "Chọn giới tính",
+                        new { @class = "form-control gender-selections" }
+                        )
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Email" type="email" class="form-control" id="inputEmail">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Số điện thoại:</label>
+                <div class="col-sm-10">
+                    <input asp-for="Phone" type="text" class="form-control" id="inputPhone">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Link Blog:</label>
+                <div class="col-sm-10">
+                    <input asp-for="LinkBlog" type="text" class="form-control" id="LinkBlog">
+                    <span asp-validation-for="LinkBlog" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Lĩnh vực nghiên cứu (cách nhau bằng dấu /):</label>
+                <div class="col-sm-10">
+                    <textarea asp-for="ResearchArea" type="text" class="form-control" id="ResearchArea"></textarea>
+                    <span asp-validation-for="ResearchArea" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Thành tựu (cách nhau bằng dấu /):</label>
+                <div class="col-sm-10">
+                    <textarea asp-for="Achievements" type="text" class="form-control" id="inputAchievements"></textarea>
+                    <span asp-validation-for="Achievements" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="site-content-footer">
+            <div class="button-admin">
+                <button class="button-admin-link">Lưu lại</button>
+            </div>
+            <div class="button-admin">
+                <a asp-action="Index" class="button-admin-link">Quay lại</a>
+            </div>
+        </div>
+    </form>
+</div>

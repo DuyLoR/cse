@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Các nhóm nghiên cứu";
+    Layout = "~/Views/Shared/_LayoutStructure.cshtml";
+    // Gán một mảng vào ViewData
+    ViewData["Breadcrumbs"] = new string[] { "Post", "Post" };
+    ViewData["BreadcrumbsText"] = new string[] { "Bài đăng", "Chi tiêt bài đăng" };
+    ViewData["currentAction"] = new string[] { "Post", "PostDetails" };
+}
+
+<div class="sidebar-content-inner">
+    <div class="sidebar-content-header">
+        <div class="sidebar-content-title">
+            <div class="sidebar-title-left">
+                <div class="sidebar-title-left-day">06</div>
+                <div class="sidebar-title-left-month">Jun</div>
+            </div>
+            <div class="sidebar-title-right">
+                @* Tiêu đề bài viết *@
+                <h5 class="sidebar-title-right-title">Cơ cấu tổ chức</h5>
+                <div class="sidebar-title-right-wrapper">
+                    <div class="sidebar-title-right-author">
+                        <div>By</div>
+                        <div style="margin-left: 10px;">Admin</div>
+                    </div>
+                    <div class="sidebar-title-right-category"></div>
+                    <div class="sidebar-title-right-ncomment">3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Loại bài viết hoặc đường dẫn *@
+    <div class="breadcrumbs breadcrumbs-bold">
+        <div class="breadcrumbs-bold-container">
+            @* _Breadcrumbs *@
+            @Html.Partial(Url.Content("~/Views/Shared/Block/_Breadcrumbs.cshtml"))
+        </div>
+    </div>
+
+    <div class="structure-container">
+        @* Nội dung bài viết *@
+    </div>
+</div>

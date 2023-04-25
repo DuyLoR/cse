@@ -1,0 +1,156 @@
+﻿@using CSE_website.Models
+@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./sites/default/files/favicon.ico" />
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'>
+    <link rel="stylesheet" href="~/lib/fontawesome/fontawesome5/css/all.min.css">
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/general_theme/css/alter.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/user_theme/css/template.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/user_theme/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/user_theme/css/responsive.css" asp-append-version="true">
+    @* Javascript *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <style>
+        .unactive,
+        .unactive:hover {
+            background-color: #ccc !important;
+            border: none !important;
+        }
+    </style>
+</head>
+
+<body style="background-image: url('/uploads/bg_signin.jpg');background-size: cover; display: grid;place-items: center; background-size: cover;">
+    <form class="form" id="signin-form" asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
+        <a class="btn btn-close" href="~/"><i class="fas fa-times"></i></a>
+        <h5>Khoa Công nghệ thông tin - TLU</h5>
+        <div class="form-group">
+            <input type="text" class="form-input" name="Email" asp-for="Email" placeholder="Tài khoản" id="signin-email">
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "err form-input-err-msg text-danger" })
+            <span class="form-input-icon err">
+                <i class="bx bx-error-circle"></i>
+            </span>
+            <span class="form-input-icon success">
+                <i class="bx bx-check-circle"></i>
+            </span>
+            @* <span class="form-input-err-msg" data-err-for="signin-email"></span> *@
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-input" name="Password" asp-for="Password" placeholder="Mật khẩu" id="signin-password">
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "err form-input-err-msg text-danger" })
+            <span class="form-input-icon err">
+                <i class="bx bx-error-circle"></i>
+            </span>
+            <span class="form-input-icon success">
+                <i class="bx bx-check-circle"></i>
+            </span>
+            @* <span class="form-input-err-msg" data-err-for="signin-password"></span> *@
+        </div>
+        <div class="form-group-wrapper">
+            <div class="form-group form-group-checkbox">
+                <input type="checkbox" name="remember" asp-for="RememberMe" id="remember">
+                <label for="remember">Ghi nhớ tài khoản<i class='bx bx-check'></i></label>
+            </div>
+            <div class="form-group">
+                <a href="#" class="btn-link-form" onclick="ShowHide('#forgot-password-form','#signin-form')">
+                    Quên mật khẩu
+                </a>
+            </div>
+        </div>
+        <button type="submit" class="form-btn" id="signin-btn">Đăng nhập</button>
+    </form>
+    <form class="form" id="forgot-password-form" onsubmit="sendMail(event)" style="display: none;">
+        <a class="btn btn-close" onclick="ShowHide('#forgot-password-form','#signin-form')">
+            <i class="fas fa-times"></i>
+        </a>
+        <h5>Khoa Công nghệ thông tin - TLU</h5>
+        <p style="color: #0e0e0e;">
+            Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn một email có hướng dẫn để đặt
+            lại mật khẩu của bạn.
+        </p>
+        <div class="form-group">
+            <input type="email" class="form-input" placeholder="Email" id="send-email-input">
+            <span class="form-input-icon err">
+                <i class="bx bx-error-circle"></i>
+            </span>
+            <span class="form-input-icon success">
+                <i class="bx bx-check-circle"></i>
+            </span>
+            <span class="form-input-err-msg" data-err-for="send-mail-input"></span>
+            <span class="send-mail-notice text-info"></span>
+            <span class="send-mail-success text-success"></span>
+            <span class="send-mail-error text-danger"></span>
+        </div>
+        <button class="form-btn" id="send-mail-btn">Gửi mail</button>
+    </form>
+</body>
+@* <script src="~/admin_theme/js/test.js" asp-append-version="true"></script> *@
+<script>
+    @* Open forgot password form *@
+        function ShowHide(id_form1, id_form2) {
+    @* let btn_forgotpw = document.getElementsByClassName('btn-link-form'); *@
+    @* id_form = btn_forgotpw[0].getAttribute('data-link'); *@
+                let form1 = $(id_form1);
+            let form2 = $(id_form2);
+            form1.toggle();
+            form2.toggle();
+        }
+
+    function sendMail(event) {
+        var email = $("#send-email-input").val();
+        if (email) {
+            $("#send-mail-btn").prop("disabled", true);
+            $("#send-mail-btn").addClass("unactive");
+            $(".send-mail-notice").text("Vui lòng chờ, chúng tôi đang gửi email cho bạn!");
+
+            $.ajax({
+                url: "/Admin/Checkpoint/SendMail",
+                method: "POST",
+                data: { email },
+                success: function (result) {
+                    $(".send-mail-success").text(result + " " + email);
+                },
+                error: function (errorThrown) {
+                    if (errorThrown.responseText) {
+                        $(".send-mail-error").text(errorThrown.responseText);
+                    }
+                },
+                complete: function (jqXHR) {
+                    $(".send-mail-notice").text("");
+                    if (jqXHR.status != 200) {
+                        setTimeout(() => {
+                            $(".send-mail-error").text("");
+                            $("#send-mail-btn").prop("disabled", false);
+                            $("#send-mail-btn").removeClass("unactive");
+                        }, 3 * 1000);
+                    }
+                    else {
+                        setTimeout(() => {
+                            $(".send-mail-success").text("");
+                            $("#send-mail-btn").prop("disabled", false);
+                            $("#send-mail-btn").removeClass("unactive");
+                        }, 5 * 60 * 1000);
+                    }
+                }
+            });
+        }
+    }
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+</html>

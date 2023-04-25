@@ -1,0 +1,161 @@
+@using CSE_website.Models;
+@model List<Subject>;
+@{
+    ViewData["Title"] = "Quản lý môn học";
+}
+@section Styles
+    {
+    <style>
+        .inactive {
+            background-color: #bdbdbd !important;
+        }
+
+        table.dataTable tbody tr {
+            background-color: unset;
+        }
+
+        .alert {
+            margin-bottom: unset;
+        }
+    </style>
+}
+
+<div class="site-content">
+    <div class="site-content-title ">
+        <h3>Danh sách môn học</h3>
+        <a asp-controller="Subject" asp-action="AddSubject">
+            <i class="fas fa-plus"></i>
+            <span>Thêm mới</span> 
+        </a>
+    </div>
+
+    <div class="site-content-main">
+           @if (ViewBag.SuccessMessage != null)
+
+        {
+                                <div id="msgAlert" class="alert alert-success" role="alert">
+                @ViewBag.SuccessMessage
+                                </div>
+        }
+        <div id="successContainer"></div>
+    <table class="table table-striped" style="width:100%" id="subject-datatable" >
+        <thead>
+        <tr>
+            <th class="table-title">STT</th>
+            <th class="table-title">Tên môn học</th>
+            <th class="table-title">Bộ môn</th>
+            <th class="table-title">Đề cương</th>
+            <th class="table-title">Chức năng</th>
+        </tr>
+        </thead>
+        <tbody >
+        </tbody>
+    </table>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-delete" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa môn học này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-close-2" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="deleteBtn">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+@{
+    await Html.RenderPartialAsync("_ConfirmModalPartial");
+}
+
+@section Scripts
+    {
+    <script>
+        $('#subject-datatable').DataTable({
+            "ajax": "/Admin/Subject/GetAll",
+            "columns": [
+                {
+                    "data": null,
+                    "render": function (data, type, row, meta) {
+                        // Sử dụng meta.row + 1 để tính toán số thứ tự của hàng trong bảng
+                        return meta.row + 1;
+                    }
+                },
+                { "data": "Name" },
+                {
+                    "data": "Departments",
+                    "render": function (data) {
+                        var html = '';
+                        data?.forEach(function(department) {
+                            html +=  `${department?.Name ?? ''}`;
+                        })
+                        return html;
+                    }
+                },
+                {
+                    "data": "Outline",
+                    "render": function (data, type, row) {
+                        if(data){
+                            return `<a href="/Admin/Subject/Download?filePath=${encodeURIComponent(data)}">Tải về</a>`;
+
+                        }
+                        else{
+                            return `Tải về`;
+                        }
+                    
+                    }
+                },
+            
+               
+                {
+                    "data": "Id",
+                    "render": function (data, type, row) {
+                       
+
+                        return `<div class="icon-row">
+                                         <a href="/Admin/Subject/EditSubject/${data}"><i class="fas fa-edit class-edit"></i></a> 
+                                          <a  class="delete-btn color-red" data-bs-toggle="modal" data-bs-target="#confirm-modal" href="/Admin/Subject/DeleteSubject/${data}">
+                                               <i class="fas fa-trash-alt"></i> 
+                                           </a>  
+                                        </div>`;
+                    }
+                },
+        
+            ],
+           
+            destroy: true,
+            language: {
+                search: "Tìm kiếm:",
+                lengthMenu: "Hiển thị _MENU_ bản ghi trên trang",
+                zeroRecords: "Không tìm thấy bản ghi phù hợp!",
+                info: "Hiển thị từ _START_ đến _END_ của tổng số _TOTAL_ bản ghi",
+                infoFiltered: " - được lọc từ _MAX_ bản ghi",
+                infoEmpty: "Không có bản ghi để hiển thị ",
+                paginate: {
+                    previous: "Trước",
+                    next: "Tiếp",
+                },
+            },
+        });
+
+        // Confirm modal handle
+        $('#confirm-modal').on('show.bs.modal', function (event) {
+            $(this).find('#del-modal-btn').off('click').on('click', function () {
+                location.href = $(event.relatedTarget).prop("href");
+            });
+        });
+    </script>
+            <script>
+                    setTimeout(function () {
+                        $('#msgAlert').fadeOut('slow');
+                    }, 3000);
+            </script>
+}

@@ -1,0 +1,104 @@
+﻿@using CSE_website.Models
+@model Post
+@{
+    ViewData["Title"] = "Cơ cấu tổ chức";
+    Layout = "~/Views/Shared/_LayoutStructure.cshtml";
+    // Gán một mảng vào ViewData
+    ViewData["Breadcrumbs"] = new string[] { "Intro", "Intro" };
+    ViewData["BreadcrumbsText"] = new string[] { "Giới thiệu", "Cơ cấu tổ chức" };
+    ViewData["currentAction"] = new string[] { "Index", "OrganizationalStructure" };
+}
+
+<div class="block-article block-article-2">
+    <div class="block-article-header">
+        <div class="article-header-left">
+            <div class="article-header-day">06</div>
+            <div class="article-header-month">Jun</div>
+        </div>
+        <div class="article-header-right">
+            <h5 class="article-header-title article-header-right-title">Cơ cấu tổ chức</h5>
+            <div class="article-header-right-wrapper">
+                <div class="article-header-right-author">
+                    <span>By</span> <span style="margin-left: 10px;">Admin</span>
+                </div>
+                <div class="article-header-right-category"></div>
+                <div class="article-header-right-ncomment">3</div>
+            </div>
+        </div>
+    </div>
+    <div class="block-article-content">
+        <div class="breadcrumbs breadcrumbs-bold">
+            <div class="breadcrumbs-bold-container">
+                @* _Breadcrumbs *@
+                @Html.Partial(Url.Content("~/Views/Shared/Block/_Breadcrumbs.cshtml"))
+            </div>
+        </div>
+        <div class="structure-container">
+            <h1 class="structure-container-heading">Sơ đồ tổ chức khoa Công nghệ thông tin</h1>
+            <div class="structure-item">
+                <h5 class="structure-item-title">* Ban chủ nhiệm khoa</h5>
+                <div>
+                    <img class="structure-item-avatar" src="~/uploads/image/thay-nguyen-huu-quynh.png" alt="">
+                    <p class="structure-item-paraph">1. PGS.TS. Nguyễn Hữu Quỳnh - Trưởng khoa Công nghệ thông tin</p>
+                </div>
+                <div>
+                    <img class="structure-item-avatar" src="~/uploads/image/thay-ta-quang-chieu.jpg" alt="">
+                    <p class="structure-item-paraph">
+                        2. TS. Tạ Quang Chiểu - Phó trưởng Khoa</p>
+                </div>
+                <div>
+                    <img class="structure-item-avatar" src="~/uploads/image/NguyenNgocDoanh.jpg" alt="">
+                    <p class="structure-item-paraph">
+                        3. PGS.TS Nguyễn Ngọc Doanh - Phó trưởng Khoa</p>
+                </div>
+            </div>
+            <div class="structure-item">
+                <h5 class="structure-item-title">* Văn phòng khoa</h5>
+            </div>
+            <div class="structure-item">
+                <h5 class="structure-item-title">* Các Bộ môn</h5>
+                <p class="structure-item-paraph">1. Bộ môn Toán học</p>
+                <p class="structure-item-paraph">
+                    2. Bộ môn Công nghệ phần mềm</p>
+                <p class="structure-item-paraph">
+                    3. Bộ môn Hệ thống thông tin</p>
+                <p class="structure-item-paraph">
+                    4. Bộ môn Mạng và An toàn Thông tin</p>
+                <p class="structure-item-paraph">
+                    5. Bộ môn Tin học Kỹ thuật tính toán</p>
+                <p class="structure-item-paraph">6. Bộ môn Trí tuệ nhân tạo</p>
+            </div>
+            <div class="structure-item">
+                <h5 class="structure-item-title">* Khối tổ chức đoàn thể</h5>
+
+                <p class="structure-item-paraph">
+                    1. Đảng bộ bộ phận khoa Công nghệ thông tin: Phó Bí thư Nguyễn Hữu Quỳnh</p>
+                <p class="structure-item-paraph">
+                    2. Công đoàn khoa Công nghệ thông tin: Chủ tịch Nguyễn Hữu Thọ</p>
+                <p class="structure-item-paraph">
+                    3. Liên chi Khoa Công nghệ thông tin: Bí thư Võ Tá Hoàng</p>
+            </div>
+            <div class="structure-item">
+                <h5 class="structure-item-title">
+                    * Các phòng thí nghiệm phục vụ công tác đào tạo, nghiên cứu
+                </h5>
+                <p class="structure-item-paraph">
+                    1. Phòng Lab Khoa học dữ liệu</p>
+                <p class="structure-item-paraph">
+                    2. Phòng Lab Công nghệ</p>
+            </div>
+            <div class="structure-item">
+                <p class="structure-item-paraph" style="text-indent: 32px;">
+                    Ngoài ra, Khoa còn thành lập
+                    một hội đồng Khoa tư vấn cho Trưởng khoa các công việc đào
+                    tạo, nghiên cứu cũng như định hướng phát triển của Khoa CNTT.</p>
+                <p class="structure-item-paraph" style="text-indent: 32px;">
+                    Ban chủ nhiệm Khoa đóng vai trò chủ đạo trong việc quyết định mọi dự án cũng như các kế hoạch phát
+                    triển
+                    của Khoa. Văn phòng Khoa là nơi giải quyết tất cả những thủ tục hành chính của Khoa cũng như quản lý
+                    tất
+                    cả những thông tin của sinh viên và cán bộ trong Khoa CNTT.</p>
+            </div>
+        </div>
+    </div>
+</div>

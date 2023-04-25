@@ -1,0 +1,123 @@
+@using CSE_website.Models
+@model Account
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    var index = 1;
+}
+
+<div class="site-content">
+    <div class="site-content-title ">
+        <h3>Danh sách tài khoản</h3>
+        <a asp-controller="Account" asp-action="AddAccount">
+            <i class="fas fa-plus"></i>
+            <span>Thêm mới</span>
+        </a>
+    </div>
+
+    <div class="site-content-main">
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div id="msgAlert" class="alert alert-success" role="alert">
+                @ViewBag.SuccessMessage
+            </div>
+        }
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div id="msgAlert" class="alert alert-danger" role="alert">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+        <div id="msgAlertDelete" role="alert"></div>
+        <table id="account-datatable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="table-title">STT</th>
+                    <th class="table-title">Email</th>
+                    <th class="table-title">Trạng thái</th>
+                    <th class="table-title">Quyền</th>
+                    <th class="table-title">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var account in ViewBag.Accounts)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td>@account.Email</td>
+                        <td>@(account.Status ? "Kích hoạt" : "Chưa kích hoạt")</td>
+                        <td>@(account.Permission != null ? account.Permission.Name : "")</td>
+                        <td>
+                            @if (account.Permission.Name != "Admin")
+                            {
+                                <div class="icon-row">
+                                    <a title="Sửa tài khoản" class="color-blue" asp-controller="Account" asp-action="EditAccount"
+                               asp-route-id="@account.Id"><i class="fas fa-edit class-edit"></i></a>
+                                    <!-- Button trigger modal -->
+                                    <a title="Xóa tài khoản" class="color-red" data-bs-toggle="modal" data-bs-target="#exampleModal" asp-controller="Account" asp-action="DeleteAccount"
+                               asp-route-id="item.Id" data-id="@account.Id">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    index++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade modal-delete" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa tài khoản này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-close-2" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="deleteBtn">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('#exampleModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+                modal.find('#deleteBtn').off('click').on('click', function () {
+                    window.location.href = '/Admin/Account/DeleteAccount/' + id;
+                });
+            });
+
+            // DataTable
+            $("#account-datatable").dataTable({
+                language: {
+                    search: "Tìm kiếm:",
+                    lengthMenu: "Hiển thị _MENU_ bản ghi trên trang",
+                    zeroRecords: "Không tìm thấy bản ghi phù hợp!",
+                    info: "Hiển thị từ _START_ đến _END_ của tổng số _TOTAL_ bản ghi",
+                    infoFiltered: " - được lọc từ _MAX_ bản ghi",
+                    infoEmpty: "Không có bản ghi để hiển thị ",
+                    paginate: {
+                        previous: "Trước",
+                        next: "Tiếp",
+                    },
+                },
+            });
+            
+            setTimeout(function () {
+                $('#msgAlert').fadeOut('slow');
+            }, 3000);
+        });
+    </script>
+}

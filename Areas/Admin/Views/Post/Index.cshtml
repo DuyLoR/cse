@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Quản lý bài viết";
+}
+
+<div class="site-content">
+    <div class="site-content-title ">
+        <h3>Danh sách bài viết</h3>
+        <a asp-controller="Post" asp-action="AddPost">
+            <i class="fas fa-plus"></i>
+            <span>Thêm mới</span> 
+        </a>
+    </div>
+    <div class="site-content-main">
+        <div class="site-content-filter ">
+            <div class="col-md-2"><label>Danh mục bài viết:</label></div>
+            <div class="col-md-10"> 
+                <select class="form-select" aria-label="Default select example">
+                    <option class="site-content-menu" selected>Open this select menu</option>
+                    <option value="1">One</option>
+                </select>
+            </div>
+        </div>
+    <table id="post-datatable" class="table table-striped" style="width:100%">
+        <thead>
+        <tr>
+            <th class="table-title">STT</th>
+            <th class="table-title">Tên</th>
+            <th class="table-title">Bộ môn</th>
+            <th class="table-title">Đề cương</th>
+            <th class="table-title">Chức năng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+            <div class="icon-row">
+                <a class="color-green" href="">
+                <i class="fas fa-eye class-eye"></i>
+                </a>
+                <a title="Sửa bài viết" class="color-blue" asp-controller="Post" asp-action="EditPost"><i class="fas fa-edit class-edit"></i></a>
+                <a title="Xóa bài viết" class="color-red" href=""> <i class="fas fa-trash-alt"></i></a>
+            </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // DataTable
+            $("#post-datatable").dataTable({
+                language: {
+                    search: "Tìm kiếm:",
+                    lengthMenu: "Hiển thị _MENU_ bản ghi trên trang",
+                    zeroRecords: "Không tìm thấy bản ghi phù hợp!",
+                    info: "Hiển thị từ _START_ đến _END_ của tổng số _TOTAL_ bản ghi",
+                    infoFiltered: " - được lọc từ _MAX_ bản ghi",
+                    infoEmpty: "Không có bản ghi để hiển thị ",
+                    paginate: {
+                        previous: "Trước",
+                        next: "Tiếp",
+                    },
+                },
+            });
+        });
+    </script>
+}

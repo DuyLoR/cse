@@ -1,0 +1,61 @@
+<div class="box-sidebar-child lecturers-expert">
+    <h3 class="lecturers-expert-title title-style-2">Chuyên gia hàng đầu</h3>
+    <div class="lecturers-expert-content">
+        @* <div class="lecturers-expert-item">
+        <div class="lecturers-expert-avatar">
+        <a asp-controller="Intro" asp-action="LecturerDetails">
+        <img src="~/uploads/image/thay-nguyen-huu-quynh.png" alt="">
+        </a>
+        </div>
+        <div class="lecturers-expert-info">
+        <a href="#" class="lecturers-expert-name">PGS.TS.Nguyễn Hữu
+        Quỳnh</a>
+        <span class="lecturers-expert-position">Trưởng khoa</span>
+        <span class="lecturers-expert-research">
+        <strong>Lĩnh vực nghiên cứu: </strong>
+        Xử lý ảnh, trí tuệ nhân tạo
+        </span>
+        </div>
+        </div> *@
+        @foreach (var lecturer in @Model)
+        {
+            <div class="lecturers-expert-item">
+                <div class="lecturers-expert-avatar">
+                    <a asp-controller="Intro" asp-action="LecturerDetails" asp-route-id="@lecturer.Id">
+                        <img src="~/@lecturer.Image" alt="">
+                    </a>
+                </div>
+                <div class="lecturers-expert-info">
+                    <a asp-controller="Intro" asp-action="LecturerDetails" asp-route-id="@lecturer.Id"
+                        class="lecturers-expert-name d-inline-block">
+                        @if (lecturer.Rank is not null)
+                        {
+                            <span>@lecturer.Rank. @lecturer.Name</span>
+                        }
+                        else
+                        {
+                            <span>@lecturer.Name</span>
+                        }
+                    </a>
+                    <span class="lecturers-expert-position">
+                        @lecturer.Position
+                    </span>
+                    <span class="lecturers-expert-research">
+                        @{
+                            var researchers = lecturer?.ResearchArea?.Split("/") ?? new string[0];
+                            if (researchers.Length > 0)
+                            {
+                                <strong>Lĩnh vực nghiên cứu: </strong>
+                                for (int i = 0; i < researchers.Length - 1; i++)
+                                {
+                                    <span>@researchers[i] - </span>
+                                }
+                                <span>@researchers[researchers.Length - 1]</span>
+                            }
+                        }
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+</div>

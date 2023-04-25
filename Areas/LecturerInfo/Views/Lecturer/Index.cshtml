@@ -1,0 +1,102 @@
+@model Lecturer
+
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+<div class="site-content">
+    <div class="site-content-title">
+        <h3>Thông tin cá nhân</h3>
+        <div class="button-admin">
+            <a asp-action="UpdateInfo" class="button-admin-link">Cập nhật thông tin</a>
+        </div>
+    </div>
+    <form id="submit-form" asp-action="Create" enctype="multipart/form-data">
+        <div class="site-content-main">
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Tên giảng viên: </label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">Cù Việt Dũng</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Ảnh đại diện:</label>
+                <div class="col-sm-10">
+                    <img src="~/uploads/bg_signin.jpg" alt="">
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Học hàm / Học vị: </label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">Thạc sỹ</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Khoa:</label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">Công nghệ thông tin</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Bộ môn:</label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">Công nghệ phần mềm</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Chức vụ: </label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">Giảng viên</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Giới tính: </label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">Nam</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">Dungcv@gmail.com</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Số điện thoại:</label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">0987652345</p>
+                </div>
+            </div>
+            <div class="mb-3 row site-content-item">
+                <label class="col-sm-2 col-form-label">Link Blog:</label>
+                <div class="col-sm-10">
+                    <p class="p-0 m-0">http://csef.tlu.edu.vn/v1/Trangchu.aspx</p>
+                </div>
+            </div>
+            <div class="mb-3 row align-items-start site-content-item">
+                <label class="col-sm-2 col-form-label">Môn học giảng dạy:</label>
+                <div class="col-sm-10">
+                    <ul>
+                        <li>Phát triển phần mềm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mb-3 row align-items-start site-content-item">
+                <label class="col-sm-2 col-form-label">Lĩnh vực nghiên cứu:</label>
+                <div class="col-sm-10">
+                    <ul>
+                       <li>Phát triển phần mềm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mb-3 row align-items-start site-content-item">
+                <label class="col-sm-2 col-form-label">Thành tựu:</label>
+                <div class="col-sm-10">
+                    <ul>
+                        <li>Nghiên cứu khoa học</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

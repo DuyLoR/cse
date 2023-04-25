@@ -1,0 +1,108 @@
+﻿@using CSE_website.Models
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IPagedList<Post>
+@{
+    ViewData["Title"] = "Đào tạo";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="block-article">
+    <div class="block-article-header">
+        <h5 class="article-header-title title-style-2">
+            Đào tạo
+        </h5>
+    </div>
+    <div class="block-article-content">
+        <ul class="list-article row">
+            <li class="list-article-item col-md-6">
+                <div class="card-content">
+                    <div class="card-content-img">
+                        <a href="#">
+                            <img class="card-content-img-a" src="~/uploads/hanhtrinhmaitruong.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="card-content-title">
+                        <div class="card-content-title-top">
+                            <span class="card-content-tille-top-span">
+                                12/12/2018 1:20/17
+                            </span>
+                        </div>
+                        <div class="card-content-title-bottom">
+                            <a class="card-content-title-bottom-a" href="" rel="tag">
+                                Lịch tuần 08 khoa CNTT năm học 2018-2019
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-article-item col-md-6">
+                <div class="card-content">
+                    <div class="card-content-img">
+                        <a href="#">
+                            <img class="card-content-img-a" src="~/uploads/hanhtrinhmaitruong.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="card-content-title">
+                        <div class="card-content-title-top">
+                            <span class="card-content-tille-top-span">
+                                12/12/2018 1:20/17
+                            </span>
+                        </div>
+                        <div class="card-content-title-bottom">
+                            <a class="card-content-title-bottom-a" href="" rel="tag">
+                                Lịch tuần 08 khoa CNTT năm học 2018-2019
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            @foreach (var post in Model)
+            {
+                <li class="list-article-item col-md-6">
+                    <div class="card-content">
+                        <div class="card-content-img">
+                            if(@post.Category.Name == "Mô tả chương trình đào tạo")
+                            {
+                            <a href="@Url.Action("Description", "Post", new { id = post.Id })">
+                                }
+                                else if(@post.Category.Name == "Quy chế đào tạo")
+                                {
+                                <a href="@Url.Action("Details", "Post", new { id = post.Id })">
+                                    }
+                                    <img class="card-content-img-a" src="@post.Image" alt="">
+                                </a>
+                        </div>
+                        <div class="card-content-title">
+                            <div class="card-content-title-top">
+                                <span class="card-content-tille-top-span">
+                                    @post.CreatedAt.ToString("dd/MM/yyyy");
+                                    @post.CreatedAt.ToString("h:mm/ss");
+                                </span>
+                            </div>
+                            <div class="card-content-title-bottom">
+                                if(@post.Category.Name == "Mô tả chương trình đào tạo")
+                                {
+                                <a class="card-content-title-bottom-a" rel="tag"
+                                    href="@Url.Action("Description", "Post", new { id = post.Id })">
+                                    }
+                                    else if(@post.Category.Name == "Quy chế đào tạo")
+                                    {
+                                    <a class="card-content-title-bottom-a" rel="tag"
+                                        href="@Url.Action("Details", "Post", new { id = post.Id })">
+                                        }
+                                        @post.Title;
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="text-center">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new
+            PagedListRenderOptions() { LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] {
+            "page-link" } })
+        </div>
+    </div>
+</div>
